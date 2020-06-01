@@ -52,7 +52,7 @@ type AssumeRoleRequest struct {
 	Policy *string `json:"Policy,omitempty" name:"Policy"`
 
 	//在tce环境中，加上这两个参数
-	OperatorUin *string `json:"OperatorUin,omitempty" name:"OperatorUin"`
+	AssumeUin *string `json:"AssumeUin,omitempty" name:"AssumeUin"`
 	UserUin *string `json:"UserUin,omitempty" name:"UserUin"`
 }
 
