@@ -52,8 +52,8 @@ type AssumeRoleRequest struct {
 	Policy *string `json:"Policy,omitempty" name:"Policy"`
 
 	//在tce环境中，加上这两个参数
-	AssumeUin *string `json:"AssumeUin,omitempty" name:"AssumeUin"`
-	UserUin *string `json:"UserUin,omitempty" name:"UserUin"`
+	AssumeUin *uint64 `json:"AssumeUin,omitempty" name:"AssumeUin"`
+	UserUin *uint64 `json:"UserUin,omitempty" name:"UserUin"`
 }
 
 func (r *AssumeRoleRequest) ToJsonString() string {
