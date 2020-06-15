@@ -2681,6 +2681,9 @@ type ModifyInstancesAttributeRequest struct {
 
 	// 指定实例的安全组Id列表，子机将重新关联指定列表的安全组，原本关联的安全组会被解绑。
 	SecurityGroups []*string `json:"SecurityGroups,omitempty" name:"SecurityGroups" list`
+
+	// 新增指定修改userData
+	UserData  *string   `json:"UserData,omitempty" name:"UserData"`
 }
 
 func (r *ModifyInstancesAttributeRequest) ToJsonString() string {
