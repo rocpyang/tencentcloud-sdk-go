@@ -23,6 +23,7 @@ type Request interface {
 	GetAction() string
 	GetBodyReader() io.Reader
 	GetDomain() string
+	GetScheme() string
 	GetHttpMethod() string
 	GetParams() map[string]string
 	GetPath() string
@@ -30,12 +31,14 @@ type Request interface {
 	GetUrl() string
 	GetVersion() string
 	SetDomain(string)
+	SetScheme(string)
 	SetHttpMethod(string)
 }
 
 type BaseRequest struct {
 	httpMethod string
 	domain     string
+	scheme     string
 	path       string
 	params     map[string]string
 	formParams map[string]string
@@ -65,8 +68,16 @@ func (r *BaseRequest) GetDomain() string {
 	return r.domain
 }
 
+func (r *BaseRequest) GetScheme() string {
+	return r.scheme
+}
+
 func (r *BaseRequest) SetDomain(domain string) {
 	r.domain = domain
+}
+
+func (r *BaseRequest) SetScheme(scheme string) {
+	r.scheme = scheme
 }
 
 func (r *BaseRequest) SetHttpMethod(method string) {
@@ -91,10 +102,14 @@ func (r *BaseRequest) GetService() string {
 }
 
 func (r *BaseRequest) GetUrl() string {
+	scheme := "https"
+	if strings.ToLower(r.scheme) == "http" {
+		scheme = "http"
+	}
 	if r.httpMethod == GET {
-		return "https://" + r.domain + r.path + "?" + GetUrlQueriesEncoded(r.params)
+		return scheme + "://" + r.domain + r.path + "?" + GetUrlQueriesEncoded(r.params)
 	} else if r.httpMethod == POST {
-		return "https://" + r.domain + r.path
+		return scheme + "://" + r.domain + r.path
 	} else {
 		return ""
 	}

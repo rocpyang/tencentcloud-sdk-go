@@ -40,6 +40,10 @@ func (c *Client) Send(request tchttp.Request, response tchttp.Response) (err err
 		request.SetHttpMethod(c.httpProfile.ReqMethod)
 	}
 
+	if request.GetScheme() == "" {
+		request.SetScheme(c.profile.HttpProfile.Scheme)
+	}
+
 	tchttp.CompleteCommonParams(request, c.GetRegion())
 
 	if c.signMethod == "HmacSHA1" || c.signMethod == "HmacSHA256" {
@@ -188,6 +192,9 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 
 	headers["Authorization"] = authorization
 	url := "https://" + request.GetDomain() + request.GetPath()
+	if strings.ToLower(c.profile.HttpProfile.Scheme) =="http" {
+		url = "http://" + request.GetDomain() + request.GetPath()
+	}
 	if canonicalQueryString != "" {
 		url = url + "?" + canonicalQueryString
 	}
